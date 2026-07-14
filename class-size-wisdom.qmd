@@ -48,36 +48,61 @@ The Texas Department of Education asks: What is the average causal effect of ass
 **What are the units, outcome, and covariates for your scenario's question?**
 
 - Units:
-
+K-3 grade students from Dallas.
 
 
 - Outcomes:
-
+Their fourth grade math scores with a regular class/small class/regular class with aides.
 
 
 - Covariates:
-
+Race, years spent in a small class, small/regular size.
 
 
 - Treatment (if any):
-
+If the student is assigned to a small class, regular class, or a regular class with teacher aides. (Causal)
 
 
 - Quantity of interest:
-
+The average causal effect (difference between the expected scores of the potential outcomes). (Causal)
 
 
 Describe the key components of a Preceptor Table for your scenario; Use words like "units," "outcomes," and "covariates."
-
+The preceptor table would have a column for the units (each 4th grade student), three columns for their fourth math score, and columns for the treatments.
 
 
 ### Exploratory Data Analysis
 
 Create a plot that shows the distribution of `g4math`.
 
+```{r}
+#| label: g4math-distribution
+
+ggplot(star, aes(x = g4math)) +
+  geom_histogram(binwidth = 10, fill = "steelblue", color = "white") +
+  labs(
+    title = "Distribution of 4th Grade Math Scores",
+    x = "4th Grade Math Score",
+    y = "Number of Students"
+  )
+```
 
 
 Create a plot that shows the relationship between `g4math` and class type.
+
+```{r}
+#| label: g4math-vs-class-type
+
+ggplot(star, aes(x = kind, y = g4math, fill = kind)) +
+  geom_boxplot() +
+  labs(
+    title = "Fourth-Grade Math Scores by Class Type",
+    x = "Class Type",
+    y = "Math Score"
+  ) +
+  theme(legend.position = "none")
+```
+
 
 
 
@@ -88,39 +113,43 @@ Create a plot that shows the relationship between `g4math` and class type.
 ### Population Table
 
 Describe the key components of a Population Table for your scenario.
-
+Columns: Each student (units); small class score, regular class score, aides class score (outcomes); class size (treatment).
 
 
 ### Assumptions
 
 Counter-example to the assumption of validity:
-
+If the 4th grade math tests are not uniform between the students. The data is from 1985, the tests don't really match up.
+Class sizes are subjective, they might not mean the same number of students per class.
+Some students might have different amounts of years with aides, or another treatment.
 
 
 Counter-example to the assumption of stability:
-
+The introduction of technology might change teaching methods between then and now.
 
 
 Counter-example to the assumption of representativeness:
-
+The data doesn't really represent all the students in Texas, only Dallas.
+If the data is not really representative of all the income brackets.
+The Tennessee schools volunteered to participate in the data collection. A volunteered smaple can't represent everyone.
 
 
 Counter-example to the assumption of unconfoundedness:
-
+If the data only gave treatment to students who were currently doing poorly in their math class.
 
 
 ### Probability Family and Link Function
 
 What probability family should we use?
-
+Normal Distribution
 
 
 Why should we use that probability family?
-
+Because our model will be a continuous, linear regression.
 
 
 What is the link function for our outcome?
-
+A linear regression identity link.
 
 
 ------------------------------------------------------------------------
